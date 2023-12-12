@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movielike.app.dao.movieMapper">
+<!-- ..................................... -->
+<!-- ............키워드 찾기............... -->
+<!-- ..................................... -->
+<!-- 키워드 찾기 무비 리스트 출력 -->
+    <select id="selectMovie" parameterType="movieDto" resultType="movieDto">
+        select DISTINCT m.movId, m.movName, m.movNameEng, m.movDate, m.movTime, m.movPoster, (m.movScore / m.movScoreCnt) movScore, m.movScoreCnt
+        from movie m
+        <if test="genreList != null and genreList.size != 0">
+            , genre g, movieGenre mg
+        </if>
+        <if test="countryNameList != null and countryNameList.size != 0">
+            , country c
+        </if>
+        <if test="ottList != null and ottList.size != 0">
+            , ott o, movieOtt mo
+        </if>
+
+        where true
+        <if test="genreList != null and genreList.size != 0">
+            and mg.movId = m.movId and mg.genrId = g.genrId and (
+            <trim prefixOverrides="OR">
+                <foreach collection = "genreList" item = "genre" separator=" ">
+                    OR g.genrName = #{genre}
+                </foreach>
+            </trim>
+            )
+        </if>
+        <if test="countryNameList != null and countryNameList.size != 0">
+            and c.movId = m.movId and (
+            <trim prefixOverrides="OR">
+                <foreach collection = "countryNameList" item = "country" separator=" ">
+                    OR c.cName = #{country}
+                </foreach>
+            </trim>
+            )
+        </if>
+        <if test="ottList != null and ottList.size != 0">
+            and mo.movId = m.movId and o.ottId = mo.ottId and (
+            <trim prefixOverrides="OR">
+                <foreach collection = "ottList" item = "ott" separator=" ">
+                    OR o.ottId = #{ott.ottId}
+                </foreach>
+            </trim>
+            )
+        </if>
+        <if test="movScoreCnt > 0">
+            and m.movScoreCnt >= #{movScoreCnt}
+        </if>
+        <if test="movScore > 0">
+            and (m.movScore / m.movScoreCnt) >= #{movScore}
+        </if>
+        <choose>
+            <when test="sort == 0">
+                order by m.movDate desc
+            </when>
+            <when test="sort == 1">
+                order by m.movScoreCnt desc, movScore desc
+            </when>
+        </choose>
+        limit #{nowPage}, #{pageSize}
+    </select>
+
+<!-- person데이터 출력 -->
+    <select id="selectPerson" parameterType="map" resultType="personDto">
+        select p.perId, p.perName, p.perImgSrc, mp.perJob from person p, moviePerson mp
+            where mp.perId = p.perId
+                and mp.movId = #{movId}
+                <if test="perJob != '' and perJob != null">
+                    and mp.perJob = #{perJob}
+                </if>
+            order by mp.perJob, p.perName;
+    </select>
+
+<!-- country데이터 출력 -->
+<!-- 나라,나라 식으로 출력됨-->
+    <select id="selectCountry" parameterType="int" resultType="String">
+        select cName from country
+            where movId = #{movId}
+        ORDER BY cName;
+    </select>
+
+<!-- genre데이터 출력 -->
+<!-- 장르,장르 식으로 출력됨-->
+    <select id="selectGenre" parameterType="int" resultType="String">
+        select g.genrName from genre g, movieGenre mg
+            where mg.genrId = g.genrId
+            and mg.movId = #{movId}
+        ORDER BY g.genrName;
+    </select>
+
+<!-- ott데이터 출력 -->
+    <select id="selectOtt" parameterType="int" resultType="ottDto">
+        select o.ottId, o.ottName from ott o, movieOtt mo
+            where mo.ottId = o.ottId
+                and mo.movId = #{movId}
+        ORDER BY o.ottName;
+    </select>
+
+<!-- ..................................... -->
+<!-- ............메인 페이지............... -->
+<!-- ..................................... -->
+<!--    메인페이지 메인배너를 위한 사용자 취향 장르 확인-->
+    <select id="selectUserGenre" parameterType="int" resultType="String">
+        select genrId from userGenre
+        where userId = #{userId};
+    </select>
+
+    <!--    메인페이지 메인배너 영화 조회-->
+    <select id="selectMainBanner" parameterType="String" resultType="movieDto">
+        select DISTINCT m.movId, m.movName, m.movPoster, m.movTrailer, m.movDate from movie m
+        <choose>
+            <when test="list!=null and  list.size!=0">
+                , movieGenre mg
+                where m.movId = mg.movId and (
+                <trim prefixOverrides="OR">
+                    <foreach collection="list" item = "genre" separator=" ">
+                        OR mg.genrId = #{genre}
+                    </foreach>
+                </trim>
+                ) and NOT m.movTrailer = ""
+            </when>
+            <otherwise>
+                where NOT m.movTrailer = ""
+            </otherwise>
+        </choose>
+        ORDER BY m.movDate desc
+        limit 0, 5;
+    </select>
+
+<!--    메인페이지 순위 영화 조회-->
+<!--    "" : 전체 인기조회
+        "netflix" : 넷플릭스 인기 조회
+        "search" : 검색 인기 조회-->
+    <select id="selectBest" parameterType="String" resultType="movieDto">
+        select DISTINCT m.movId, m.movName, m.movPoster, m.movSearchCnt, m.movScoreCnt, m.movScore from movie m
+        <if test="search == 'netflix'">
+            , movieOtt mo
+            where mo.ottId = 8 and mo.movId = m.movId
+        </if>
+        <choose>
+            <when test="search == 'search'">
+                ORDER BY m.movSearchCnt desc
+            </when>
+            <otherwise>
+                ORDER BY m.movScoreCnt desc, m.movScore desc
+            </otherwise>
+        </choose>
+        limit 0, 10;
+    </select>
+
+<!--    메인페이지 시리즈 영화 조회 (지브리, 마블, 해리포터)-->
+    <select id="selectSeries" parameterType="String" resultType="movieDto">
+        select DISTINCT m.movId, m.movName, m.movPoster, m.movDate from movie m, series s
+            where s.movId = m.movId
+                and s.serName = #{serName}
+        ORDER BY m.movDate desc
+        limit 0, 6;
+    </select>
+
+<!-- ....................................... -->
+<!-- ............리스트 페이지............... -->
+<!-- ....................................... -->
+    <select id="selectSearchMov" parameterType="map" resultType="movieDto">
+        select DISTINCT m.movId, m.movName, m.movDate, m.movPoster, (m.movScore / m.movScoreCnt) movScore, m.movScoreCnt
+            from movie m
+            <choose>
+                <when test="title=='search'">
+                    , person p, moviePerson mp
+                    where ((m.movId = mp.movId) and (mp.perId = p.perId))
+                    and ( replace(m.movName, ' ', '') like concat('%', #{val}, '%')
+                    or replace(m.movNameEng, ' ', '') like concat('%', #{val}, '%')
+                    or replace(p.perName, ' ', '') like concat('%', #{val}, '%') )
+                </when>
+                <when test="title=='series'">
+                    , series s
+                    where m.movId = s.movId
+                        and s.serName = #{val}
+                </when>
+                <when test="title=='genr'">
+                    , movieGenre mg
+                    where m.movId = mg.movId
+                        and mg.genrId = ${val}
+                </when>
+                <when test="title=='year'">
+                    <choose>
+                        <when test="val == '1989'">
+                            where m.movDate <![CDATA[<]]> STR_TO_DATE(#{endYear}, '%Y%m%d')
+                        </when>
+                        <otherwise>
+                            where m.movDate BETWEEN STR_TO_DATE(#{startYear}, '%Y%m%d') and STR_TO_DATE(#{endYear}, '%Y%m%d')
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="title=='ott'">
+                    , movieOtt mo
+                    where m.movId = mo.movId
+                        and mo.ottId = ${val}
+                </when>
+                <when test="title=='country'">
+                    , country c
+                    where m.movId = c.movId
+                        and c.cName = #{val}
+                </when>
+                <when test="title=='myView'">
+                    , watchedMovie mw
+                    where mw.movId = m.movId
+                        and mw.userId = ${userId}
+                </when>
+                <when test="title=='myLike'">
+                    , myList um
+                    where um.movId = m.movId
+                        and um.userId = ${userId}
+                </when>
+                <when test="title=='myScore'">
+                    , review r
+                    where r.movId = m.movId
+                        and r.userId = ${userId}
+                        and r.rvScore = ${val}
+                </when>
+            </choose>
+        <choose>
+            <when test="sort == 0">
+                order by m.movDate desc
+            </when>
+            <when test="sort == 1">
+                order by m.movScoreCnt desc, movScore desc
+            </when>
+        </choose>
+        limit ${nowPage}, 20
+    </select>
+<!--  리스트페이지 - 나이별  -->
+    <select id="selectSearchMovAge" parameterType="map" resultType="movieDto">
+        select DISTINCT m.movId, m.movName, m.movDate, m.movPoster, (m.movScore / m.movScoreCnt) movScore, m.movScoreCnt, w.movCount
+            from movie m,
+                (select m.movId, count(m.movId) as movCount
+                    from movie m, watchedMovie mw, user u
+                        where (u.userId = mw.userId and mw.movId = m.movId)
+                            <choose>
+                                <when test="val == '50'">
+                                    and u.userBirth <![CDATA[<=]]> STR_TO_DATE(#{startAge}, '%Y%m%d')
+                                </when>
+                                <otherwise>
+                                    and (u.userBirth BETWEEN STR_TO_DATE(#{startAge}, '%Y%m%d') and STR_TO_DATE(#{endAge}, '%Y%m%d'))
+                                </otherwise>
+                            </choose>
+                    group by m.movId) w
+            where w.movId = m.movId
+            order by w.movCount desc, m.movScoreCnt desc, movScore desc
+        limit 0, 20;
+    </select>
+
+    <!-- ....................................... -->
+    <!-- ............상세 페이지............... -->
+    <!-- ....................................... -->
+    <!--  영화 ID를 받아 영화 정보 가져오기 -->
+    <select id="selectMovieDetail" parameterType="int" resultType="movieDto">
+        select * from movie where movId = #{movId}
+    </select>
+    <!-- 영화 ID를 받아 제작 국가 가져오기 -->
+    <select id="selectMovieCountry" parameterType="int" resultType="String">
+        select cName from country where movId = #{movId}
+    </select>
+    <!-- 영화 ID를 받아 영화 장르 가져오기 -->
+    <select id="selectMovieGenre" parameterType="int" resultType="String">
+        select genrName from genre
+        join moviegenre m on genre.genrId = m.genrId
+        where movId = #{movId}
+    </select>
+    <!-- 영화 ID를 받아 해당 영화를 볼 수 있는 OTT 정보 가져오기 -->
+    <select id="selectMovieOtt" parameterType="int" resultType="ottDto">
+        select ott.ottId, ottName from ott join movieott mo on ott.ottId = mo.ottId where movId = #{movId}
+    </select>
+    <!-- 영화 ID를 받아 감독 / 배우 정보 받아오기 -->
+    <select id="selectMoviePerson" parameterType="int" resultType="personDto">
+        select mp.perId ,perName, mp.perjob, perImgSrc from person join movieperson mp on mp.perId = person.perId where movId = #{movId} order by mp.perJob
+    </select>
+    <!-- 영화 상세페이지 들어간 횟수 업데이트 -->
+    <update id="updateSearchCnt" parameterType="int">
+        update movie set movSearchCnt = movSearchCnt + 1 where movId = #{movId}
+    </update>
+    <!-- 영화 리뷰 점수 합산 -->
+    <update id="updateMovieScore" parameterType="map">
+        update movie set movScore = movScore + #{rvScore}, movScoreCnt = movScoreCnt + #{pmOne} where movId = #{movId}
+    </update>
+    <update id="updateScore" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";" index="index">
+            update movie
+            set movScore = (movScore - #{item.rvScore}), movScoreCnt = (movScoreCnt - 1)
+            where movId = #{item.movId}
+        </foreach>
+    </update>
+</mapper>

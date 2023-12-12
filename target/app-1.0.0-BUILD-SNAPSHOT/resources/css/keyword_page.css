@@ -1,0 +1,393 @@
+#wrap img {
+    width: 100%; height: 100%;
+}
+.container {
+    width: 100%;
+    background-color: #222;
+    padding-bottom: 200px;
+    color: #fff;
+    overflow: hidden;
+}
+.m_head{
+    width: 1400px;
+    margin: 0 auto;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 26px;
+    padding: 15px 0;
+}
+.m_headKey{
+    color: #A785EF;
+}
+.m_table{
+    width: 1400px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 1px solid #7d7d7d;
+}
+.m_tr{
+    height: 35px;
+    padding: 10px 0px;
+    border-bottom: 1px solid #7d7d7d;
+    display: flex;
+}
+.m_tr:last-child{border: 0;}
+.m_th{
+    width: 10%;
+}
+.m_td{
+    width: 90%;
+    overflow:hidden;
+}
+.m_tdList{
+    float: left;
+}
+
+.genre_list {
+    width: 1410px;
+}
+.country_list {
+    width: 1190px;
+}
+.ott_list {
+    width: 580px;
+}
+.review_cnt_list {
+    width: 440px;
+}
+.score_list {
+    width: 270px;
+}
+
+.m_td:hover{
+    overflow: auto;
+}
+
+.m_td::-webkit-scrollbar {
+    height: 5px;
+}
+.m_td::-webkit-scrollbar-thumb {
+    background-color: #979797a3;
+    border-radius: 10px;
+}
+.m_td::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
+
+.m_tdItem, .m_tagItem {
+    border: 1px solid;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.m_tagItem {
+    margin-top: 10px;
+}
+.m_tdItem_check{
+    background: #A785EF;
+}
+.m_tdItem {
+    float: left;
+}
+.m_tdItem:hover,
+.m_tagItem:hover {
+    background: #A785EF;
+}
+
+.m_tagBox {
+    width: 1400px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+.m_tagList {
+    width: 96%;
+    padding: 10px 0px;
+    box-sizing: border-box;
+    float: left;
+}
+.chk_delete_btn {
+    float: left;
+    font-size: 24px;
+    margin: 18px;
+    cursor: pointer;
+}
+.m_mvBox {
+    margin-top: 50px;
+    width: 1400px;
+    margin: 30px auto;
+    overflow: hidden;
+}
+.m_mvPoster {
+    width: 45%;
+    height: auto;
+    float: left;
+}
+.m_mvDesc {
+    width: 55%;
+    float: left;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.m_mvTitle {
+    font-size: 35px;
+    padding: 10px 0;
+    margin-right: 10px;
+}
+.m_mvDate, .m_mvTitleEng, .m_mvDescBox {
+    padding: 10px 0;
+}
+.m_mvDir, .m_mvCountry, .m_mvGen {
+    margin-right: 10px
+}
+.star_icon {
+    width: 30px;
+    height: 30px;
+    float: left;
+}
+.avg_box {
+    margin-top: 20px;
+    overflow: hidden;
+}
+.movie_avg {
+    float: left;
+    margin-left: 10px;
+    font-size: 24px;
+}
+.movie_avg_cnt {
+    float: left;
+    margin: 10px;
+    color: #777;
+}
+.m_mvListBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 40px;
+}
+.m_mvList {
+    width: calc((100% - 20px) / 2);
+    overflow: hidden;
+    float: left;
+    margin-top: 30px;
+    cursor: pointer;
+    padding: 10px;
+    box-sizing: border-box;;
+    transition: all 0.3s;
+}
+.m_mvList:hover {
+    box-shadow: 0 0 10px 5px grey;
+    transition: all 0.3s;
+    transform: scale(1.05);
+}
+.m_mvOttBox {
+    overflow: hidden;
+    padding: 10px 0;
+}
+.m_mvOtt {
+    float: left;
+    margin-right: 20px;
+}
+.m_mvOtt img {
+    display: block;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 10px;
+    margin: 0 auto 10px;
+}
+.ott_img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.float_L {
+    float: left;
+    margin-right: 20px;
+}
+
+.nodata_txt {
+    text-align: center;
+    margin: 50px 0;
+}
+
+
+input {
+    display: none;
+}
+
+.m_tagItem {
+    display: none;
+}
+
+/* �λⅤ */
+#adventure_chk:checked ~ .m_tagBox #adventure,
+#fantasy_chk:checked ~ .m_tagBox #fantasy,
+#animation_chk:checked ~ .m_tagBox #animation,
+#drama_chk:checked ~ .m_tagBox #drama,
+#horror_chk:checked ~ .m_tagBox #horror,
+#action_chk:checked ~ .m_tagBox #action,
+#comedy_chk:checked ~ .m_tagBox #comedy,
+#history_chk:checked ~ .m_tagBox #history,
+#western_chk:checked ~ .m_tagBox #western,
+#thriller_chk:checked ~ .m_tagBox #thriller,
+#crime_chk:checked ~ .m_tagBox #crime,
+#documentary_chk:checked ~ .m_tagBox #documentary,
+#sf_chk:checked ~ .m_tagBox #sf,
+#mystery_chk:checked ~ .m_tagBox #mystery,
+#music_chk:checked ~ .m_tagBox #music,
+#romance_chk:checked ~ .m_tagBox #romance,
+#family_chk:checked ~ .m_tagBox #family,
+#war_chk:checked ~ .m_tagBox #war,
+#tvmovie_chk:checked ~ .m_tagBox #tvmovie,
+    /* 援�� */
+#korea_chk:checked ~ .m_tagBox #korea,
+#america_chk:checked ~ .m_tagBox #america,
+#uk_chk:checked ~ .m_tagBox #uk,
+#china_chk:checked ~ .m_tagBox #china,
+#japan_chk:checked ~ .m_tagBox #japan,
+#france_chk:checked ~ .m_tagBox #france,
+#hongkong_chk:checked ~ .m_tagBox #hongkong,
+#canada_chk:checked ~ .m_tagBox #canada,
+#germany_chk:checked ~ .m_tagBox #germany,
+#taiwan_chk:checked ~ .m_tagBox #taiwan,
+#australia_chk:checked ~ .m_tagBox #australia,
+#brazil_chk:checked ~ .m_tagBox #brazil,
+#india_chk:checked ~ .m_tagBox #india,
+#russia_chk:checked ~ .m_tagBox #russia,
+#denmark_chk:checked ~ .m_tagBox #denmark,
+#mexico_chk:checked ~ .m_tagBox #mexico,
+#switzerland_chk:checked ~ .m_tagBox #switzerland,
+
+    /* OTT */
+#netflex_chk:checked ~ .m_tagBox #netflex,
+#watcha_chk:checked ~ .m_tagBox #watcha,
+#disnep_chk:checked ~ .m_tagBox #disnep,
+#wavve_chk:checked ~ .m_tagBox #wavve,
+#appletv_chk:checked ~ .m_tagBox #appletv,
+#naverseries_chk:checked ~ .m_tagBox #naverseries,
+    /* 由щ럭 */
+#review_500_chk:checked ~ .m_tagBox #review_500,
+#review_400_chk:checked ~ .m_tagBox #review_400,
+#review_300_chk:checked ~ .m_tagBox #review_300,
+    /* �됱젏 */
+#score5_chk:checked ~ .m_tagBox #score5,
+#score4_chk:checked ~ .m_tagBox #score4,
+#score3_chk:checked ~ .m_tagBox #score3
+{
+    display: inline-block;
+}
+.select_box {
+    overflow: hidden;
+}
+.select_r {
+    float: right;
+    outline: none;
+    margin-top: 15px;
+    font-size: 16px;
+    padding: 3px 5px;
+    display: none;
+}
+.m_moreBox {
+    width: 120px;
+    height: 60px;
+    background: #a785ef;
+    border-radius: 30px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 20px;
+    margin: 100px auto;
+    cursor: pointer;
+    display: none;
+}
+footer {
+    position : absolute;
+    bottom : 0;
+}
+
+@media screen and (min-width: 280px) and (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+    .m_head {
+        width: 100%;
+        font-size: 1.3em;
+        margin: 0;
+    }
+    .m_table {
+        width: 80%;
+        margin: 0;
+        font-size: 0.8em;
+    }
+    .m_tr {
+        width: 90vw;
+    }
+    .m_th {
+        width: 15%;
+    }
+    .m_td {
+        width: 80%;
+    }
+    .m_tagBox {
+        width: 100%;
+    }
+    .select_box {
+        margin-bottom: 30px;
+    }
+    .m_mvBox {
+        width: 100%;
+        margin: 0;
+    }
+    .m_mvListBox {
+        padding: 0;
+    }
+    .m_mvList {
+        width: 100%;
+        margin: 0;
+    }
+    .m_mvTitle {
+        font-size: 25px;
+    }
+    .m_mvDate, .m_mvTitleEng, .m_mvDescBox {
+        padding: 5px 0;
+        font-size: 13px;
+    }
+    .m_mvDir, .m_mvCountry, .m_mvGen {
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .m_mvOtt img {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    .m_mvOtt {
+        font-size: 10px;
+    }
+    .avg_box {
+        margin: 0;
+    }
+    .star_icon {
+        width: 20px;
+        height: 20px;
+    }
+    .movie_avg {
+        font-size: 18px;
+    }
+    .movie_avg_cnt {
+        margin: 5px;
+        font-size: 12px;
+    }
+
+    .nodata_txt {
+        margin: 0;
+    }
+    .chk_delete_btn {
+        font-size: 20px;
+        margin: 20px 0;
+    }
+}

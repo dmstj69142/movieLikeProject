@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movielike.app.dao.reviewMapper">
+    <!-- 해당 영화 리뷰 범위 불러오기 -->
+    <select id="selectMovieReviewList" parameterType="map" resultType="reviewDto">
+        select r.*, u.userNickname from review r
+        join user u
+        on r.userId = u.userId
+        where true
+        <if test="movId != null and movId > 0">
+            and movId = #{movId}
+        </if>
+        <if test="userId != null and userId > 0">
+            and userId = #{userId}
+        </if>
+        order by
+        <choose>
+            <when test="mode == 1">
+                rvLike desc, rvId desc
+            </when>
+            <otherwise>
+                rvRegDate desc, rvId desc
+            </otherwise>
+        </choose>
+        limit #{nowPage} , #{pageSize}
+    </select>
+    <!-- 베스트 3 리뷰 가져오기 -->
+    <select id="selectBestReview" parameterType="int" resultType="reviewDto">
+        select r.rvId, r.movId, r.rvScore, r.rvContent, r.rvLike, u.userNickname
+        <choose>
+            <when test="movId > 0">
+                from review r
+                join user u
+                on r.userId = u.userId
+                where movId = #{movId}
+            </when>
+            <when test="movId == 0">
+                , m.movName
+                from review r
+                join user u
+                on r.userId = u.userId
+                join movie m
+                on r.movId = m.movId
+            </when>
+        </choose>
+        order by r.rvLike desc
+        limit 3
+    </select>
+
+    <insert id="insertReview" parameterType="reviewDto">
+        insert into review(movId, userId, rvScore, rvContent) values(#{movId}, #{userId}, #{rvScore}, #{rvContent})
+    </insert>
+
+    <!-- 회원이 좋아요 누른 리뷰인지 확인 -->
+    <select id="selectReviewLikeOne" parameterType="map" resultType="int">
+        select count(userId) from reviewlike where rvId = #{rvId} and userId = #{userId}
+    </select>
+
+    <select id="selectReviewCnt" parameterType="int" resultType="int">
+        select count(rvId) from review where movId = #{movId}
+    </select>
+
+    <insert id="insertReviewLike" parameterType="map">
+        insert into reviewlike(rvId, userId) values(#{rvId}, #{userId})
+    </insert>
+
+    <update id="updateReviewLike" parameterType="map">
+        update review set rvLike = rvLike + #{pmOne} where rvId = #{rvId}
+    </update>
+
+    <delete id="deleteReviewLike" parameterType="map">
+        delete from reviewlike where rvId = #{rvId} and userId = #{userId}
+    </delete>
+
+    <update id="updateReview" parameterType="reviewDto">
+        update review set rvContent = #{rvContent}, rvUpDate = now() where rvId = #{rvId}
+    </update>
+
+    <delete id="deleteReview" parameterType="int">
+        delete from review where rvId = #{rvId}
+    </delete>
+
+    <select id="confirmReview" parameterType="map" resultType="int">
+        select count(rvId) from review where userId = #{userId} and movId = #{movId}
+    </select>
+
+    <select id="selectReviewScore" parameterType="int" resultType="map">
+        select rvScore, movId from review where rvId = #{rvId}
+    </select>
+
+    <!-- 키워드 찾기 무비 리스트 출력 -->
+    <select id="selectReview" resultType="reviewDto" parameterType="map">
+        select
+        r.rvId,
+        r.userId,
+        r.movId,
+        r.rvScore,
+        r.rvContent,
+        r.rvRegDate,
+        r.rvLike,
+        u.userNickname,
+        m.movName
+        from review r
+        join user u
+        on r.userId = u.userId
+        left join movie m on r.movId =m.movId
+        WHERE r.userId = #{userId}
+        <if test="orderType == 'new'">
+            ORDER BY rvRegDate DESC
+        </if>
+        <if test="orderType == 'like'">
+            ORDER BY rvLike DESC
+        </if>
+        <if test="startRow != null and pageSize != null">
+            LIMIT #{startRow}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="selectReviewCount" resultType="Integer" parameterType="map">
+        select
+        count(*)
+        from review r
+        WHERE r.userId = #{userId}
+    </select>
+
+    <select id="selectReviewGroupByScore" resultType="reviewScoreDto" parameterType="reviewDto">
+        SELECT rvScore, COUNT(*) as scoreCount
+        FROM review
+        WHERE userId = #{userId}
+        GROUP BY rvScore
+        ORDER BY rvScore
+    </select>
+
+    <delete id="deleteAllReview" parameterType="int">
+        delete from review where userId = #{userId}
+    </delete>
+    <delete id="deleteAllReviewLike" parameterType="int">
+        delete from review where userId = #{userId}
+    </delete>
+    <select id="selectUserReview" parameterType="int" resultType="map">
+        select movId, rvScore from review where userId = #{userId}
+    </select>
+
+</mapper>

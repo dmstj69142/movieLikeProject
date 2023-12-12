@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'TmoneyRoundWindExtraBold';
+    src: url('../font/TmoneyRoundWindExtraBold.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+* { font-family: 'TmoneyRoundWindExtraBold'; }
+body{
+    background-color: #222;
+    margin: 0;
+    padding: 0;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+a {
+    text-decoration: none; color: inherit;
+}
+#wrap {
+    padding-top: 100px;
+}
