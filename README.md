@@ -5,10 +5,12 @@
    - 벤치마킹한 사이트 : 키노라이츠(https://m.kinolights.com)
    - 들어간 기술 : Html, Jsp, Css, JavaScript, jQuery, Apache Tomcat, Spring, MySQL, aJax, Python, MyBatis
    - 사용한 툴 : Visual Studio Code, IntelliJ, Notion, MySQL Workbench
-<br>
+
+
 ## 📽️ 개발 기간
 - 2023.11.09 ~ 2023.11.29
-<br>
+
+
 ## 📽️ 페이지 구성
 #### 헤더
 - 로고 클릭 : 메인 페이지로 이동
