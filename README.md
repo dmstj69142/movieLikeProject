@@ -6,26 +6,29 @@
    - 들어간 기술 : Html, Jsp, Css, JavaScript, jQuery, Apache Tomcat, Spring, MySQL, aJax, Python, MyBatis
    - 사용한 툴 : Visual Studio Code, IntelliJ, Notion, MySQL Workbench
 
+## 📽️ 개발 기간
+- 2023.11.09 ~ 2023.11.29
+
 ## 📽️ 페이지 구성
-	- 헤더
+#### 헤더
 		1. 로고 클릭 : 메인 페이지로 이동.
 		2. 영화 전체보기 클릭 : 전체 영화 리스트 페이지로 이동.
 		3. 차트 클릭 : 분류 별로 영화를 찾아볼 수 있는 페이지로 이동.
 		4. 키워드 찾기 클릭 : 키워드를 골라 영화를 찾아볼 수 있는 페이지로 이동.
 		5. 로그인 세션 없을 시 로그인 / 회원가입, 있을 시 로그아웃 / 마이페이지 보임.
 
-   	- 메인 페이지
-        	https://github.com/songyouyoung/movieLike/assets/144079150/d8c73b20-2639-44d3-b2ae-3ee66f73f06e
-		https://github.com/songyouyoung/movieLike/assets/144079150/57980a38-b8cb-4e6c-b25c-31fb6d9bdae9
-		1. 메인 배너 : 로그인 세션 있을 시 해당 회원의 관심 장르에 맞춰 최신 영화 출력, 로그인 세션 없을 시 최신 영화 출력.
-		2. 검색바 : 돋보기 버튼 클릭, 엔터 쳤을 시 검색어에 맞는 영화 리스트 페이지로 이동.
-		3. 인기 순위, 넷플릭스 인기 순위 : 영화 평점 준 사람 수, 영화 평점으로 정렬해서 Top 10개 출력.
-		4. 많이 검색한 영화 : 영화 상세 페이지에 들어간 count 수로 정렬해서 Top 10개 출력.
-		5. 베스트 리뷰 : 리뷰 좋아요 순으로 정렬해서 Top 3개 출력.
-		6. 시리즈 : 시리즈 별 최신 순으로 정렬해서 Top 6개 출력.
+#### 메인 페이지
+<a href="https://github.com/songyouyoung/movieLike/assets/144079150/d8c73b20-2639-44d3-b2ae-3ee66f73f06e"></a>
+<a href="https://github.com/songyouyoung/movieLike/assets/144079150/57980a38-b8cb-4e6c-b25c-31fb6d9bdae9"></a>
+- 메인 배너 : 로그인 세션 있을 시 해당 회원의 관심 장르에 맞춰 최신 영화 출력, 로그인 세션 없을 시 최신 영화 출력.
+-  검색바 : 돋보기 버튼 클릭, 엔터 쳤을 시 검색어에 맞는 영화 리스트 페이지로 이동.
+- 인기 순위, 넷플릭스 인기 순위 : 영화 평점 준 사람 수, 영화 평점으로 정렬해서 Top 10개 출력.
+- 많이 검색한 영화 : 영화 상세 페이지에 들어간 count 수로 정렬해서 Top 10개 출력.
+- 베스트 리뷰 : 리뷰 좋아요 순으로 정렬해서 Top 3개 출력.
+- 시리즈 : 시리즈 별 최신 순으로 정렬해서 Top 6개 출력.
 
-   	- 리스트 페이지
-	     	https://github.com/songyouyoung/movieLike/assets/144079150/b11a99dc-6147-44fb-9732-6dd98d793435
+#### 리스트 페이지
+<a href="https://github.com/songyouyoung/movieLike/assets/144079150/b11a99dc-6147-44fb-9732-6dd98d793435"></a>
 		1. 메인 -> 검색 : 검색어에 맞는 영화 출력. 영화 제목, 배우, 감독 다 조회 가능. 
 		2. 메인 -> 시리즈 더보기 : 선택한 시리즈에 맞는 영화 출력. 
 		3. 차트 -> 분류 : 선택한 분류에 맞는 영화 출력. 
