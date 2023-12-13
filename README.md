@@ -1,10 +1,11 @@
 ## 📽️ 포트폴리오 소개
-   - 배경색 : #222
-   - 포인트 색 : #A785EF
-   - 기본 폰트색 : #fff
-   - 벤치마킹한 사이트 : 키노라이츠(https://m.kinolights.com)
-   - 들어간 기술 : Html, Jsp, Css, JavaScript, jQuery, Apache Tomcat, Spring, MySQL, aJax, Python, MyBatis
-   - 사용한 툴 : Visual Studio Code, IntelliJ, Notion, MySQL Workbench
+- 주제: 사용자가 고민 없이 편리하게 영화 선택을 돕는 웹사이트
+- 배경색 : #222
+- 포인트 색 : #A785EF
+- 기본 폰트색 : #fff
+- 벤치마킹한 사이트 : 키노라이츠(https://m.kinolights.com)
+- 들어간 기술 : Html, Jsp, Css, JavaScript, jQuery, Apache Tomcat, Spring, MySQL, aJax, Python, MyBatis
+- 사용한 툴 : Visual Studio Code, IntelliJ, Notion, MySQL Workbench
 
 
 ## 📽️ 개발 기간
