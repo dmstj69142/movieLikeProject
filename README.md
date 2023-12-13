@@ -16,10 +16,11 @@
 - 차트 클릭 : 분류 별로 영화를 찾아볼 수 있는 페이지로 이동.
 - 키워드 찾기 클릭 : 키워드를 골라 영화를 찾아볼 수 있는 페이지로 이동.
 - 로그인 세션 없을 시 로그인 / 회원가입, 있을 시 로그아웃 / 마이페이지 보임.
+<br>
 
 #### 메인 페이지
-<a href="https://github.com/songyouyoung/movieLike/assets/144079150/d8c73b20-2639-44d3-b2ae-3ee66f73f06e"></a>
-<a href="https://github.com/songyouyoung/movieLike/assets/144079150/57980a38-b8cb-4e6c-b25c-31fb6d9bdae9"></a>
+<a href="https://github.com/songyouyoung/movieLike/assets/144079150/d8c73b20-2639-44d3-b2ae-3ee66f73f06e">상세보기</a>
+<a href="https://github.com/songyouyoung/movieLike/assets/144079150/57980a38-b8cb-4e6c-b25c-31fb6d9bdae9">상세보기</a>
 - 메인 배너 : 로그인 세션 있을 시 해당 회원의 관심 장르에 맞춰 최신 영화 출력, 로그인 세션 없을 시 최신 영화 출력.
 -  검색바 : 돋보기 버튼 클릭, 엔터 쳤을 시 검색어에 맞는 영화 리스트 페이지로 이동.
 - 인기 순위, 넷플릭스 인기 순위 : 영화 평점 준 사람 수, 영화 평점으로 정렬해서 Top 10개 출력.
